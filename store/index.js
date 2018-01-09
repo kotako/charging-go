@@ -5,6 +5,7 @@ import { firebaseMutations, firebaseAction } from 'vuexfire'
 const db = firebase.database()
 const usersRef = db.ref('/users')
 const postsRef = db.ref('/posts')
+const chatsRef = db.ref('/chats')
 const provider = new firebase.auth.TwitterAuthProvider()
 
 Vue.use(Vuex)
@@ -15,7 +16,8 @@ const createStore = () => {
       user: null,
       post: null,
       users: [],
-      posts: []
+      posts: [],
+      chats: []
     },
     getters: {
       posts: state => {
@@ -31,7 +33,8 @@ const createStore = () => {
         return post
       },
       users: state => state.users,
-      user: state => state.user
+      user: state => state.user,
+      chats: state => state.chats
     },
     mutations: {
       setCredential (state, { user }) {
@@ -62,9 +65,18 @@ const createStore = () => {
       INIT_POSTS: firebaseAction(({ bindFirebaseRef }) => {
         bindFirebaseRef('posts', postsRef)
       }),
+      INIT_CHATS: firebaseAction(({ bindFirebaseRef }) => {
+        bindFirebaseRef('chats', chatsRef)
+      }),
       ADD_POST: firebaseAction((ctx, { email, body }) => {
         postsRef.push({
           from: email,
+          body
+        })
+      }),
+      ADD_COMMENT: firebaseAction((ctx, { userId, body, post }) => {
+        chatsRef.child(post).push({
+          from: userId,
           body
         })
       }),
