@@ -1,14 +1,14 @@
 <template lang="html">
-  <li class="media" v-if="post.user">
+  <li class="media" v-if="issue.user">
     <figure class="media-left">
       <p class="image is-64x64">
-        <img :src="post.user.icon">
+        <img :src="issue.user.icon">
       </p>
     </figure>
     <div class="media-content">
       <div class="content">
         <p>
-          <strong>{{post.user.name}}</strong>
+          <strong>{{issue.user.name}}</strong>
           <br>
           <span v-html="formattedPost" />
         </p>
@@ -17,10 +17,12 @@
         <div class="level-left"></div>
         <div class="level-right">
           <a class="level-item">
-            <a target="_blank" :href="`/posts/${post['.key']}`" class="icon is-small"><i class="fa fa-eye"></i></a>
+            <a target="_blank" :href="`/posts/${issue['.key']}`" class="icon is-small"><i class="fa fa-eye"></i></a>
           </a>
         </div>
       </nav>
+      <TheMessageTimeLine :issue="issue"/>
+      <TheMessagePostArea :issue="issue"/>
     </div>
   </li>
 </template>
@@ -28,14 +30,20 @@
 <script>
 import h from 'htmlspecialchars'
 import { link } from 'autolinker'
+import TheMessageTimeLine from '~/components/TheMessageTimeLine.vue'
+import TheMessagePostArea from '~/components/TheMessagePostArea.vue'
 
 export default {
   props: {
-    post: Object
+    issue: Object
+  },
+  components: {
+    TheMessageTimeLine,
+    TheMessagePostArea
   },
   computed: {
     formattedPost () {
-      return link(h(this.post.body))
+      return link(h(this.issue.body))
     }
   }
 }

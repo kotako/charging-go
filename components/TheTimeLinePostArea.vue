@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     async doPost () {
-      await this.$store.dispatch('ADD_POST', {email: this.user.email, body: this.body})
+      await this.$store.dispatch('ADD_ISSUE', {userId: this.user.uid, body: this.body})
       this.body = ''
     }
   }
