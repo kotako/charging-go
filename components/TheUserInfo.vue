@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="media" v-else>
-      <a class="button is-primary" @click="callAuth">Signin with Google</a>
+      <a class="button is-primary" @click="callAuth">Signin with Twitter</a>
     </div>
   </div>
 </template>

@@ -5,7 +5,7 @@ import { firebaseMutations, firebaseAction } from 'vuexfire'
 const db = firebase.database()
 const usersRef = db.ref('/users')
 const postsRef = db.ref('/posts')
-const provider = new firebase.auth.GoogleAuthProvider()
+const provider = new firebase.auth.TwitterAuthProvider()
 
 Vue.use(Vuex)
 
@@ -45,7 +45,7 @@ const createStore = () => {
     actions: {
       async SET_CREDENTIAL ({commit}, { user }) {
         if (!user) return
-        await usersRef.child(user.email.replace('@', '_at_').replace('.', '_dot_')).set({
+        await usersRef.child(user.uid).set({
           name: user.displayName,
           email: user.email,
           icon: user.photoURL
