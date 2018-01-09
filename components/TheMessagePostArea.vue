@@ -5,7 +5,7 @@
     </p>
     <p class="control">
       <button class="button is-primary">
-        Post
+        issue
       </button>
     </p>
   </form>
@@ -21,14 +21,14 @@ export default {
     }
   },
   props: {
-    post: Object
+    issue: Object
   },
   computed: {
     ...mapGetters(['user'])
   },
   methods: {
     async doPost () {
-      await this.$store.dispatch('ADD_COMMENT', {userId: this.user.uid, body: this.body, post: this.post['.key']})
+      await this.$store.dispatch('ADD_MESSAGE', {userId: this.user.uid, body: this.body, issueId: this.issue['.key']})
       this.body = ''
     }
   }

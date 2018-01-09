@@ -34,8 +34,19 @@ const createStore = () => {
       },
       users: state => state.users,
       user: state => state.user,
-      messages: state => id => id ? state.messages[id] : state.messages,
-      message: state => state.message
+      messages: state => id => {
+        if (!state.messages[id]) return null
+        return Object.keys(state.messages[id]).map((key) => {
+          const message = state.messages[id][key]
+          message.user = state.users.find((user) => user['.key'] === message.from)
+          return message
+        })
+      },
+      message: state => {
+        const message = state.message
+        if (!message) return null
+        message.user = state.users.find((user) => user['.key'] === message.from)
+      }
     },
     mutations: {
       setCredential (state, { user }) {
