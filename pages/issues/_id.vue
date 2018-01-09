@@ -1,18 +1,18 @@
 <template lang="html">
   <div class="container">
     <div class="columns">
-      <div class="column is-three-fifths is-offset-one-fifth" v-if="post && post.user">
-        <h1 class="title text-is-centered">{{post.user.name}}さんの投稿</h1>
+      <div class="column is-three-fifths is-offset-one-fifth" v-if="issue && issue.user">
+        <h1 class="title text-is-centered">{{issue.user.name}}さんの投稿</h1>
         <div class="card">
           <div class="card-content">
             <div class="media">
               <div class="media-left">
                 <figure class="image is-48x48">
-                  <img :src="post.user.icon">
+                  <img :src="issue.user.icon">
                 </figure>
               </div>
               <div class="media-content">
-                <strong>{{post.user.name}}</strong>
+                <strong>{{issue.user.name}}</strong>
               </div>
             </div>
 
@@ -44,9 +44,9 @@ export default {
   },
   computed: {
     formattedPost () {
-      return link(h(this.post ? this.post.body : ''))
+      return link(h(this.issue ? this.issue.body : ''))
     },
-    ...mapGetters(['post'])
+    ...mapGetters(['issue'])
   }
 }
 </script>
