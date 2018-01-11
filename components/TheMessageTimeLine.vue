@@ -1,7 +1,7 @@
 <template>
   <div class="timeline">
     <ul>
-      <Message :message="message" v-for="message in messages(issue['.key'])" v-if="message.user" />
+      <Message :message="message" :key="message['.key']" v-for="message in messages(issue['.key'])" v-if="message.user" />
     </ul>
   </div>
 </template>
