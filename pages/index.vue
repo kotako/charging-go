@@ -32,14 +32,15 @@ export default {
       if (!this.user) user = await auth()
       await Promise.all([
         this.user ? Promise.resolve() : this.$store.dispatch('SET_CREDENTIAL', { user: user || null }),
-        this.posts.length ? Promise.resolve() : this.$store.dispatch('INIT_POSTS'),
-        this.users.length ? Promise.resolve() : this.$store.dispatch('INIT_USERS')
+        this.issues.length ? Promise.resolve() : this.$store.dispatch('INIT_ISSUES'),
+        this.users.length ? Promise.resolve() : this.$store.dispatch('INIT_USERS'),
+        this.messages ? Promise.resolve() : this.$store.dispatch('INIT_MESSAGES')
       ])
       this.isLoaded = true
     }
   },
   computed: {
-    ...mapGetters(['user', 'users', 'posts'])
+    ...mapGetters(['user', 'users', 'issues'])
   }
 }
 </script>

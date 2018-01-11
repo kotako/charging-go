@@ -1,7 +1,7 @@
 <template lang="html">
   <form class="field is-grouped" @submit.prevent="doPost">
     <p class="control is-expanded">
-      <input class="input" type="text" placeholder="What's happening?" v-model="body">
+      <input class="input" type="text" placeholder="Comment" v-model="body">
     </p>
     <p class="control">
       <button class="button is-primary">
@@ -20,12 +20,15 @@ export default {
       body: ''
     }
   },
+  props: {
+    issue: Object
+  },
   computed: {
     ...mapGetters(['user'])
   },
   methods: {
     async doPost () {
-      await this.$store.dispatch('ADD_ISSUE', {userId: this.user.uid, body: this.body})
+      await this.$store.dispatch('ADD_MESSAGE', {userId: this.user.uid, body: this.body, issueId: this.issue['.key']})
       this.body = ''
     }
   }

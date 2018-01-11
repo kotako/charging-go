@@ -1,26 +1,20 @@
 <template lang="html">
-  <li class="media" v-if="post.user">
+  <li class="media" v-if="message.user">
     <figure class="media-left">
       <p class="image is-64x64">
-        <img :src="post.user.icon">
+        <img :src="message.user.icon">
       </p>
     </figure>
     <div class="media-content">
       <div class="content">
         <p>
-          <strong>{{post.user.name}}</strong>
+          <strong>{{message.user.name}}</strong>
           <br>
           <span v-html="formattedPost" />
+          <br>
+          <span v-html="formattedDate" />
         </p>
       </div>
-      <nav class="level is-mobile">
-        <div class="level-left"></div>
-        <div class="level-right">
-          <a class="level-item">
-            <a target="_blank" :href="`/posts/${post['.key']}`" class="icon is-small"><i class="fa fa-eye"></i></a>
-          </a>
-        </div>
-      </nav>
     </div>
   </li>
 </template>
@@ -31,11 +25,15 @@ import { link } from 'autolinker'
 
 export default {
   props: {
-    post: Object
+    message: Object
   },
   computed: {
     formattedPost () {
-      return link(h(this.post.body))
+      return link(h(this.message.body))
+    },
+    formattedDate () {
+      const d = new Date(this.message.created_at)
+      return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}`
     }
   }
 }

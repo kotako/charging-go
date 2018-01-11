@@ -3,24 +3,24 @@
     <TheTimeLinePostArea v-if="user" />
     <ul class="posts">
       <transition-group name="post">
-        <Post class="post" :post="post" :key="post['.key']" v-for="post in posts" v-if="post.user" />
+        <Issue class="post" :issue="issue" :key="issue['.key']" v-for="issue in issues" v-if="issue.user" />
       </transition-group>
     </ul>
   </div>
 </template>
 
 <script>
-import Post from '~/components/Post.vue'
+import Issue from '~/components/Issue.vue'
 import { mapGetters } from 'vuex'
 import TheTimeLinePostArea from '~/components/TheTimeLinePostArea.vue'
 
 export default {
   components: {
-    Post,
+    Issue,
     TheTimeLinePostArea
   },
   computed: {
-    ...mapGetters(['user', 'posts'])
+    ...mapGetters(['user', 'issues'])
   }
 }
 </script>
