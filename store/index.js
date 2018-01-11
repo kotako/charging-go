@@ -80,10 +80,11 @@ const createStore = () => {
       INIT_MESSAGES: firebaseAction(({ bindFirebaseRef }) => {
         bindFirebaseRef('messages', messagesRef)
       }),
-      ADD_ISSUE: firebaseAction((ctx, { userId, body }) => {
+      ADD_ISSUE: firebaseAction((ctx, { userId, body, wanted }) => {
         issuesRef.push({
           from: userId,
           body,
+          wanted,
           created_at: new Date().getTime()
         })
       }),

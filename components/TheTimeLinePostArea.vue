@@ -3,6 +3,14 @@
     <p class="control is-expanded">
       <input class="input" type="text" placeholder="What's happening?" v-model="body">
     </p>
+    <p>
+      <div >
+        <button class="button" v-bind:class="{active: wanted}" type="button" v-on:click="wanted = true">貸して</button>
+      </div>
+      <div>
+        <button class="button" v-bind:class="{active: !wanted}" type="button" v-on:click="wanted = false">貸すよ</button>
+      </div>
+    </p>
     <p class="control">
       <button class="button is-primary">
         Post
@@ -17,6 +25,7 @@ import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
+      wanted: true,
       body: ''
     }
   },
@@ -25,7 +34,7 @@ export default {
   },
   methods: {
     async doPost () {
-      await this.$store.dispatch('ADD_ISSUE', {userId: this.user.uid, body: this.body})
+      await this.$store.dispatch('ADD_ISSUE', {userId: this.user.uid, body: this.body, wanted: this.wanted})
       this.body = ''
     }
   }
@@ -35,5 +44,8 @@ export default {
 <style scoped>
 .field {
   margin-bottom: 16px;
+}
+.active {
+  background-color: #3498db;
 }
 </style>
