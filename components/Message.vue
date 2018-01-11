@@ -11,6 +11,8 @@
           <strong>{{message.user.name}}</strong>
           <br>
           <span v-html="formattedPost" />
+          <br>
+          <span v-html="formattedDate" />
         </p>
       </div>
     </div>
@@ -28,6 +30,10 @@ export default {
   computed: {
     formattedPost () {
       return link(h(this.message.body))
+    },
+    formattedDate () {
+      const d = new Date(this.message.created_at)
+      return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}`
     }
   }
 }

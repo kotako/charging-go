@@ -11,6 +11,8 @@
           <strong>{{issue.user.name}}</strong>
           <br>
           <span v-html="formattedPost" />
+          <br>
+          <span v-html="formattedDate" />
         </p>
       </div>
       <nav class="level is-mobile">
@@ -44,6 +46,10 @@ export default {
   computed: {
     formattedPost () {
       return link(h(this.issue.body))
+    },
+    formattedDate () {
+      const d = new Date(this.issue.created_at)
+      return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}`
     }
   }
 }

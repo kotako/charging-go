@@ -83,13 +83,15 @@ const createStore = () => {
       ADD_ISSUE: firebaseAction((ctx, { userId, body }) => {
         issuesRef.push({
           from: userId,
-          body
+          body,
+          created_at: new Date().getTime()
         })
       }),
       ADD_MESSAGE: firebaseAction((ctx, { userId, body, issueId }) => {
         messagesRef.child(issueId).push({
           from: userId,
-          body
+          body,
+          created_at: new Date().getTime()
         })
       }),
       callAuth () {
