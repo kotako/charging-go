@@ -5,7 +5,7 @@
     </p>
     <p class="control">
       <button class="button is-primary">
-        issue
+        Post
       </button>
     </p>
   </form>

@@ -69,7 +69,7 @@ const createStore = () => {
       },
       async INIT_SINGLE ({commit}, { id }) {
         const snapshot = await issuesRef.child(id).once('value')
-        commit('saveIssue', { issue: snapshot.val() })
+        commit('saveIssue', { issue: {...snapshot.val(), '.key': id} })
       },
       INIT_USERS: firebaseAction(({ bindFirebaseRef }) => {
         bindFirebaseRef('users', usersRef)

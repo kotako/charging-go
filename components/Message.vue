@@ -27,7 +27,6 @@ export default {
   },
   computed: {
     formattedPost () {
-      console.log(this.message)
       return link(h(this.message.body))
     }
   }
