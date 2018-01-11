@@ -18,13 +18,15 @@
       <nav class="level is-mobile">
         <div class="level-left"></div>
         <div class="level-right">
-          <a class="level-item">
-            <a target="_blank" :href="`/issues/${issue['.key']}`" class="icon is-small"><i class="fa fa-eye"></i></a>
-          </a>
+          <i class="fa fa-eye" v-on:click="slideToggle" />
         </div>
       </nav>
-      <TheMessageTimeLine :issue="issue"/>
-      <TheMessagePostArea :issue="issue"/>
+      <transition>
+        <div class="message-list " v-if="open">
+          <TheMessageTimeLine :issue="issue"/>
+          <TheMessagePostArea :issue="issue"/>
+        </div>
+      </transition>
     </div>
   </li>
 </template>
@@ -36,12 +38,22 @@ import TheMessageTimeLine from '~/components/TheMessageTimeLine.vue'
 import TheMessagePostArea from '~/components/TheMessagePostArea.vue'
 
 export default {
+  data () {
+    return {
+      open: false
+    }
+  },
   props: {
     issue: Object
   },
   components: {
     TheMessageTimeLine,
     TheMessagePostArea
+  },
+  methods: {
+    slideToggle () {
+      this.open = !this.open
+    }
   },
   computed: {
     formattedPost () {
