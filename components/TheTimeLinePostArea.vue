@@ -4,17 +4,8 @@
       <input class="input" type="text" placeholder="What's happening?" v-model="body">
     </p>
     <p>
-      <div >
-        <button class="button" v-bind:class="{active: wanted}" type="button" v-on:click="wanted = true">貸して</button>
-      </div>
-      <div>
-        <button class="button" v-bind:class="{active: !wanted}" type="button" v-on:click="wanted = false">貸すよ</button>
-      </div>
-    </p>
-    <p class="control">
-      <button class="button is-primary">
-        Post
-      </button>
+      <button class="button is-primary" v-on:click="wanted = true">貸して！</button>
+      <button class="button is-primary" v-on:click="wanted = false">貸すよ！</button>
     </p>
   </form>
 </template>
@@ -34,6 +25,7 @@ export default {
   },
   methods: {
     async doPost () {
+      if (this.body === '') return
       await this.$store.dispatch('ADD_ISSUE', {userId: this.user.uid, body: this.body, wanted: this.wanted})
       this.body = ''
     }
