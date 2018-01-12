@@ -63,7 +63,8 @@ const createStore = () => {
         await usersRef.child(user.uid).set({
           name: user.displayName,
           email: user.email,
-          icon: user.photoURL
+          icon: user.photoURL,
+          twitter: user.providerData[0].uid
         })
         commit('setCredential', { user })
       },
@@ -80,10 +81,11 @@ const createStore = () => {
       INIT_MESSAGES: firebaseAction(({ bindFirebaseRef }) => {
         bindFirebaseRef('messages', messagesRef)
       }),
-      ADD_ISSUE: firebaseAction((ctx, { userId, body }) => {
+      ADD_ISSUE: firebaseAction((ctx, { userId, body, wanted }) => {
         issuesRef.push({
           from: userId,
           body,
+          wanted,
           created_at: new Date().getTime()
         })
       }),
