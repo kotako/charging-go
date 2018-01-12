@@ -4,8 +4,8 @@
       <input class="input" type="text" placeholder="What's happening?" v-model="body">
     </p>
     <p>
-      <button class="button is-primary" v-on:click="wanted = true">貸して！</button>
-      <button class="button is-primary" v-on:click="wanted = false">貸すよ！</button>
+      <button class="button is-info" v-on:click="wanted = true">ほしい！</button>
+      <button class="button is-success" v-on:click="wanted = false">あるよ！</button>
     </p>
   </form>
 </template>
@@ -39,5 +39,8 @@ export default {
 }
 .active {
   background-color: #3498db;
+}
+.button {
+  margin: 0px 5px;
 }
 </style>

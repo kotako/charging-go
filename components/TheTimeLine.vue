@@ -1,9 +1,11 @@
 <template lang="html">
   <div class="timeline">
     <TheTimeLinePostArea v-if="user" />
-    <div>
-      <button class="button" v-on:click="wanted = true">貸して</button>
-      <button class="button" v-on:click="wanted = false">貸すよ</button>
+    <div class="tabs is-toggle">
+      <ul>
+        <li v-on:click="wanted = true" :class="{ 'is-active': wanted }"><a>ほしい</a></li>
+        <li v-on:click="wanted = false" :class="{ 'is-active': !wanted }"><a>あるよ</a></li>
+      </ul>
     </div>
     <ul class="posts">
       <transition-group name="post">

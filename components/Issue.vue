@@ -12,7 +12,7 @@
           <br>
           <span v-html="formattedPost" />
           <br>
-          <strong v-text="issue.wanted ? '貸して！' : '貸すよ！'"/>
+          <strong v-text="issue.wanted ? 'ほしい！' : 'あるよ！'"/>
           <br>
           <span v-html="formattedDate" />
         </p>
