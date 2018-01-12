@@ -34,4 +34,7 @@ export default {
 </script>
 
 <style lang="css">
+li {
+  margin: 0;
+}
 </style>
