@@ -1,9 +1,9 @@
 <template lang="html">
   <li class="media" v-if="issue.user">
     <figure class="media-left">
-      <p class="image is-64x64">
+      <a target="_blank" v-bind:href="twitterURL" class="image is-64x64">
         <img :src="issue.user.icon">
-      </p>
+      </a>
     </figure>
     <div class="media-content">
       <div class="content">
@@ -11,6 +11,8 @@
           <strong>{{issue.user.name}}</strong>
           <br>
           <span v-html="formattedPost" />
+          <br>
+          <strong v-text="issue.wanted ? '貸して！' : '貸すよ！'"/>
           <br>
           <span v-html="formattedDate" />
         </p>
@@ -21,7 +23,7 @@
           <i class="fa fa-eye" v-on:click="slideToggle" />
         </div>
       </nav>
-      <transition>
+      <transition name="slide-fade">
         <div class="message-list " v-if="open">
           <TheMessageTimeLine :issue="issue"/>
           <TheMessagePostArea :issue="issue"/>
@@ -62,10 +64,23 @@ export default {
     formattedDate () {
       const d = new Date(this.issue.created_at)
       return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}`
+    },
+    twitterURL () {
+      return `https://twitter.com/intent/user?user_id=${this.issue.user.twitter}`
     }
   }
 }
 </script>
 
 <style lang="css">
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .3s ease;
+}
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateY(10px);
+  opacity: 0;
+}
 </style>

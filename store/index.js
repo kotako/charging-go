@@ -63,7 +63,8 @@ const createStore = () => {
         await usersRef.child(user.uid).set({
           name: user.displayName,
           email: user.email,
-          icon: user.photoURL
+          icon: user.photoURL,
+          twitter: user.providerData[0].uid
         })
         commit('setCredential', { user })
       },
