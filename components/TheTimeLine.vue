@@ -1,9 +1,13 @@
 <template lang="html">
   <div class="timeline">
     <TheTimeLinePostArea v-if="user" />
+    <div>
+      <button class="button" v-on:click="wanted = true">貸して</button>
+      <button class="button" v-on:click="wanted = false">貸すよ</button>
+    </div>
     <ul class="posts">
       <transition-group name="post">
-        <Issue class="post" :issue="issue" :key="issue['.key']" v-for="issue in issues" v-if="issue.user" />
+        <Issue class="post" :issue="issue" :key="issue['.key']" v-for="issue in issues" v-if="issue.user&&issue.wanted==wanted" />
       </transition-group>
     </ul>
   </div>
@@ -15,6 +19,11 @@ import { mapGetters } from 'vuex'
 import TheTimeLinePostArea from '~/components/TheTimeLinePostArea.vue'
 
 export default {
+  data () {
+    return {
+      wanted: true
+    }
+  },
   components: {
     Issue,
     TheTimeLinePostArea
