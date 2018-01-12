@@ -1,9 +1,9 @@
 <template lang="html">
   <li class="media" v-if="message.user">
     <figure class="media-left">
-      <p class="image is-64x64">
+      <a target="_blank" v-bind:href="twitterURL" class="image is-64x64">
         <img :src="message.user.icon">
-      </p>
+      </a>
     </figure>
     <div class="media-content">
       <div class="content">
@@ -34,6 +34,9 @@ export default {
     formattedDate () {
       const d = new Date(this.message.created_at)
       return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}`
+    },
+    twitterURL () {
+      return `https://twitter.com/intent/user?user_id=${this.message.user.twitter}`
     }
   }
 }
