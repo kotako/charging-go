@@ -4,7 +4,8 @@ import firebase from '~/plugins/firebase'
 import { firebaseMutations, firebaseAction } from 'vuexfire'
 const db = firebase.database()
 const usersRef = db.ref('/users')
-const postsRef = db.ref('/posts')
+const issuesRef = db.ref('/issues')
+const messagesRef = db.ref('/messages')
 const provider = new firebase.auth.TwitterAuthProvider()
 
 Vue.use(Vuex)
@@ -13,32 +14,46 @@ const createStore = () => {
   return new Vuex.Store({
     state: {
       user: null,
-      post: null,
+      issue: null,
       users: [],
-      posts: []
+      issues: [],
+      messages: {}
     },
     getters: {
-      posts: state => {
-        return state.posts.map((post) => {
-          post.user = state.users.find((user) => user.email === post.from)
-          return post
+      issues: state => {
+        return state.issues.map((issue) => {
+          issue.user = state.users.find((user) => user['.key'] === issue.from)
+          return issue
         }).reverse()
       },
-      post: state => {
-        const post = state.post
-        if (!post) return null
-        post.user = state.users.find((user) => user.email === post.from)
-        return post
+      issue: state => {
+        const issue = state.issue
+        if (!issue) return null
+        issue.user = state.users.find((user) => user['.key'] === issue.from)
+        return issue
       },
       users: state => state.users,
-      user: state => state.user
+      user: state => state.user,
+      messages: state => id => {
+        if (!state.messages[id]) return null
+        return Object.keys(state.messages[id]).map((key) => {
+          const message = state.messages[id][key]
+          message.user = state.users.find((user) => user['.key'] === message.from)
+          return message
+        })
+      },
+      message: state => {
+        const message = state.message
+        if (!message) return null
+        message.user = state.users.find((user) => user['.key'] === message.from)
+      }
     },
     mutations: {
       setCredential (state, { user }) {
         state.user = user
       },
-      savePost (state, { post }) {
-        state.post = post
+      saveIssue (state, { issue }) {
+        state.issue = issue
       },
       ...firebaseMutations
     },
@@ -48,24 +63,37 @@ const createStore = () => {
         await usersRef.child(user.uid).set({
           name: user.displayName,
           email: user.email,
-          icon: user.photoURL
+          icon: user.photoURL,
+          twitter: user.providerData[0].uid
         })
         commit('setCredential', { user })
       },
       async INIT_SINGLE ({commit}, { id }) {
-        const snapshot = await postsRef.child(id).once('value')
-        commit('savePost', { post: snapshot.val() })
+        const snapshot = await issuesRef.child(id).once('value')
+        commit('saveIssue', { issue: {...snapshot.val(), '.key': id} })
       },
       INIT_USERS: firebaseAction(({ bindFirebaseRef }) => {
         bindFirebaseRef('users', usersRef)
       }),
-      INIT_POSTS: firebaseAction(({ bindFirebaseRef }) => {
-        bindFirebaseRef('posts', postsRef)
+      INIT_ISSUES: firebaseAction(({ bindFirebaseRef }) => {
+        bindFirebaseRef('issues', issuesRef)
       }),
-      ADD_POST: firebaseAction((ctx, { email, body }) => {
-        postsRef.push({
-          from: email,
-          body
+      INIT_MESSAGES: firebaseAction(({ bindFirebaseRef }) => {
+        bindFirebaseRef('messages', messagesRef)
+      }),
+      ADD_ISSUE: firebaseAction((ctx, { userId, body, wanted }) => {
+        issuesRef.push({
+          from: userId,
+          body,
+          wanted,
+          created_at: new Date().getTime()
+        })
+      }),
+      ADD_MESSAGE: firebaseAction((ctx, { userId, body, issueId }) => {
+        messagesRef.child(issueId).push({
+          from: userId,
+          body,
+          created_at: new Date().getTime()
         })
       }),
       callAuth () {

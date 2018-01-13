@@ -10,6 +10,6 @@ export default async function ({ store }) {
       console.log(e)
     }
     await store.dispatch('SET_CREDENTIAL', { user: user || null })
-    await store.dispatch('INIT_POSTS')
+    await store.dispatch('INIT_ISSUES')
   }
 }
