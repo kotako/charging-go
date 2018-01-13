@@ -1,11 +1,11 @@
 <template lang="html">
   <form class="field is-grouped" @submit.prevent="doPost">
     <p class="control is-expanded">
-      <input class="input" type="text" placeholder="Comment" v-model="body">
+      <input class="input" type="text" placeholder="コメント" v-model="body">
     </p>
     <p class="control">
       <button class="button is-primary">
-        Post
+        送信
       </button>
     </p>
   </form>

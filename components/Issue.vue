@@ -10,17 +10,17 @@
         <p>
           <strong>{{issue.user.name}}</strong>
           <br>
-          <span v-html="formattedPost" />
+          <span class="subtitle is-3" v-html="formattedPost" />
           <br>
           <strong v-text="issue.wanted ? 'ほしい！' : 'あるよ！'"/>
           <br>
-          <span v-html="formattedDate" />
+          <span class="subtitle is-6" v-html="formattedDate" />
         </p>
       </div>
       <nav class="level is-mobile">
         <div class="level-left"></div>
         <div class="level-right">
-          <i class="fa fa-eye" v-on:click="slideToggle" />
+          <i class="fa fa-comments" v-on:click="slideToggle" />
         </div>
       </nav>
       <transition name="slide-fade">
@@ -73,6 +73,12 @@ export default {
 </script>
 
 <style lang="css">
+span strong {
+  margin: 100px 0px;
+}
+.fa {
+  font-size: 30px;
+}
 .slide-fade-enter-active {
   transition: all .3s ease;
 }
