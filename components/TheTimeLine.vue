@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="timeline">
     <TheTimeLinePostArea v-if="user" />
-    <div class="tabs is-toggle">
+    <div class="tabs is-toggle" v-if="user">
       <ul>
         <li v-on:click="wanted = true" :class="{ 'is-active': wanted }"><a>ほしい</a></li>
         <li v-on:click="wanted = false" :class="{ 'is-active': !wanted }"><a>あるよ</a></li>
